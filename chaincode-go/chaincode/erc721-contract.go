@@ -382,6 +382,7 @@ func Foo() {
     atomic.AddUint64(&called, 1)
 }
 
+// Mint a new non-fungible token
 func (c *TokenERC721Contract) SafeMint(ctx contractapi.TransactionContextInterface) (string, error) {
 	Foo()
 	tokenId := strconv.FormatUint(called,10)
@@ -394,7 +395,6 @@ func (c *TokenERC721Contract) SafeMint(ctx contractapi.TransactionContextInterfa
 
 // Mint a new non-fungible token
 // param {String} tokenId Unique ID of the non-fungible token to be minted
-// param {String} tokenURI URI containing metadata of the minted non-fungible token
 // returns {Object} Return the non-fungible token object
 
 func _mintWithTokenURI(ctx contractapi.TransactionContextInterface, tokenId string) (*Nft, error) {
