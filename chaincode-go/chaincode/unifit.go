@@ -41,6 +41,21 @@ func (c *TokenERC721Contract) GetChainCodeOwner(ctx contractapi.TransactionConte
 
 
 func (c *TokenERC721Contract) SetBaseURI(ctx contractapi.TransactionContextInterface,uri string) string{
+	owner64, err := ctx.GetClientIdentity().GetID()
+	if err != nil {
+		return false, fmt.Errorf("failed to GetClientIdentity owner64: %v", err)
+	}
+
+	ownerBytes, err := base64.StdEncoding.DecodeString(owner64)
+	if err != nil {
+		return false, fmt.Errorf("failed to DecodeString owner64: %v", err)
+	}
+	owner := string(ownerBytes)
+	
+	
+	if chainCodeOwner != owner {
+		return false, fmt.Errorf("No permission to SetBaseURI")
+	}
 	baseURI = uri
 	value :="BaseURI set to "+baseURI
 	return value
